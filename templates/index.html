@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Resume Parser</title>
+</head>
+<body>
+    <h1>Upload Resume (PDF)</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="resume" accept=".pdf" required>
+        <button type="submit">Parse</button>
+    </form>
+
+    {% if data %}
+        <h2>Parsed Data</h2>
+        <ul>
+        {% for key, value in data.items() %}
+            <li><strong>{{ key }}:</strong>
+                {% if value is iterable and value is not string %}
+                    <ul>
+                    {% for item in value %}
+                        <li>{{ item }}</li>
+                    {% endfor %}
+                    </ul>
+                {% else %}
+                    {{ value }}
+                {% endif %}
+            </li>
+        {% endfor %}
+        </ul>
+
+        {% if download_link %}
+            <p><a href="{{ download_link }}">⬇️ Download Word Document</a></p>
+        {% endif %}
+    {% endif %}
+</body>
+</html>
